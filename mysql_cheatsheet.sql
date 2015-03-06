@@ -64,3 +64,15 @@ select @a = @b;
 	/*the answer is 0, it is returning a binary answer*/
 	select 6 between 5 and 10;
 	/*the answer is 1, it is returning a binary answer*/
+	
+/* logical operator  */
+select customerNumber, amount from payments where amount and amount < 2000;
+
+set @test = 5;
+/* benchmark is a function, first parameter takes the number of iteration we want to perform
+and the second is the expression we want to evaluate  */
+select  benchmark(100000, @test > 0 and @test < 1000);
+
+/* order of precedence */
+	/* Building mathematical order in calculations */
+	select ((2+2)*(4/2));
