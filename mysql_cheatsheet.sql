@@ -43,3 +43,11 @@ select @a;
 
 /* comparing */
 select @a = @b;
+
+/* system and status variable */
+	/* to find base directory */
+	select @@basedir; 
+	/* status variable to show how many time you have entered select command */
+	show status like 'com_select';
+	/* */
+	select @@global.time_zone, @@session.time_zone, @@local.time_zone, @@time_zone;
