@@ -205,3 +205,65 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	/* Using where clause more affectively */
 	select * from orderdetails where (quantityOrdered, priceEach) = (27, 121.64);
 	select * from orderdetails where (quantityOrdered, priceEach) IN ((27, 121.64), (22, 58.34));
+	
+/* **** Order By ****** */
+	select * from employees where firstName like '_a%' order by jobTitle;
+	/* using multiple columns in order by clause 
+	   but that will give the result on the hierarchy basis*/
+	select * from employees where firstName like '_a%' order by jobTitle, lastName;
+	/* using a sort method in order by */
+	select * from employees where firstName like '_a%' order by lastName desc;
+	/* selecting one specific data first and then showing rest of it after that information 
+	   using if statement in order by clause */
+	select firstName, lastName from employees order by if(jobTitle = 'President',1,2), jobTitle;
+	/* selecting which information to put first using order by clause using when ,then  */
+	select 
+		firstname, lastname
+	from
+		employees
+	order by CASE jobTitle
+		when 'President' then 1
+		when 'VP Sales' then 2
+		when 'VP Marketing' then 3
+		else 4
+	end , firstName;
+	
+	/* LIMIT */
+	/* in this limit clause the first value is the number of rows we want to skip
+	   the second value to show the number of rows we want to show 
+	*/
+	select * from employees order by firstName limit 3,10;
+	/* avoiding duplicate using DISTINCT */
+	/* without distinct there were 38 results, with distinct 13 only */
+	select distinct productVendor, productLine from products where productLine = 'Classic Cars';
+	/* Aggregation Queries */
+	/* count */
+	select count(*) from products where productLine = 'Classic Cars';
+	/* min(), max(), avg(), sum() all these are aggregation clause */
+	/* GROUP BY */
+	select firstName, lastName, officeCode, jobTitle from employees group by firstName, lastName;
+	/* using cast() */
+	select firstName, lastName, officeCode, jobTitle from employees group by CAST(firstName as  CHAR), lastName;
+	/* using order by and group by together */
+	select firstName, lastName, officeCode, jobTitle from employees group by firstName, lastName order by officeCode;
+	
+	/* ****** HAVING ******* */	
+	select customerNumber, count(*) as numberCount from payments group by customerNumber having customerNumber = 141;
+	/* We can add order by clause also */
+	select customerNumber, amount, count(*) as numberCount from payments group by amount having amount > 70000 order by customerNumber; 
+	
+	/* WITH ROLLUP */
+	/* Performing a WITH ROLLUP when grouping by multiple fields, MySQL returns a rollup row for each group. */
+	select 
+		ifnull(customerNumber, 'Grand Total') as CustNum,
+		sum(amount) as TotalPurchase
+	from
+		payments
+	group by customerNumber with rollup; 
+	/* Just like to introduce a string function REPEAT('-', 25)
+	the first one is the string that we want to repeat, and the second one
+	is the number of times we want to repeat it */
+	
+	/* -------------------------------------------------------------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------------------------------------- */
+	/* -------------------------------------------------------------------------------------------------------------------------------------- */
