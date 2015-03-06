@@ -182,3 +182,17 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	select ifnull(null, 'Ok Its null'); /* this will return 'Ok Its null' */
 	select ifnull(5, 'Ok Its null'); /* this will return the value it self i.e. 5 */
 	
+/* Information Functions */
+	/* to check the version */
+	select version();
+	/* to know the database we are working on */
+	select database();
+	/* to know the connection id */
+	select connection_id();
+	/* to know the current user */
+	select current_user();
+	/* to see if a database is selected or not */
+	select database();	
+	/* to see how many rows we have avoided getting */
+	select sql_calc_found_rows * from customers limit 5;
+	select found_rows();
