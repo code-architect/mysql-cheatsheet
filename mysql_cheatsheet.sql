@@ -196,3 +196,12 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	/* to see how many rows we have avoided getting */
 	select sql_calc_found_rows * from customers limit 5;
 	select found_rows();
+	
+/* Selecting */
+	select orderNumber, quantityOrdered, orderLineNumber, priceEach from orderdetails where priceEach IN (136, 167.06);
+	/* and */
+	select orderNumber, quantityOrdered, orderLineNumber, priceEach from orderdetails where priceEach = 136 or priceEach = 167.06;
+	/* are the same :) */
+	/* Using where clause more affectively */
+	select * from orderdetails where (quantityOrdered, priceEach) = (27, 121.64);
+	select * from orderdetails where (quantityOrdered, priceEach) IN ((27, 121.64), (22, 58.34));
