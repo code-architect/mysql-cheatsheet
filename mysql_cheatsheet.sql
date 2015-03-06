@@ -51,3 +51,16 @@ select @a = @b;
 	show status like 'com_select';
 	/* */
 	select @@global.time_zone, @@session.time_zone, @@local.time_zone, @@time_zone;
+	
+	/* to find how may 3's are there in 10 */
+	select 10 div 3;
+	/* operand */ 
+	select 10 % 3;
+	select 10 mod 3;
+
+/* string compression  */
+	/* using "BETWEEN", "AND" operator in another way */
+	select 4 between 5 and 10;
+	/*the answer is 0, it is returning a binary answer*/
+	select 6 between 5 and 10;
+	/*the answer is 1, it is returning a binary answer*/
