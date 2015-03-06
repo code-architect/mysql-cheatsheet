@@ -76,3 +76,31 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 /* order of precedence */
 	/* Building mathematical order in calculations */
 	select ((2+2)*(4/2));
+	
+/* Function and parameters */
+	/* few numeric functions */
+	select pi();
+	/* This function by default shows 6 decimal places of value, mysql actually uses a full precetion of 16 
+	significant digits, to expand that we need to do this */
+	select pi() + 0.000000000000000;
+	
+	/* The power function has two form a long form and a short form */
+	select power(5, 2);
+	/* and */
+	select pow(5, 2);
+	/* We can do many things with this power function, for say we can find square root of 5 */
+	select power(5, .5); /*or*/ select power(5, 0.5);
+	/* We do have a separate square root function which will give the same answer */
+	select sqrt(5);
+	/* Rounding a number */
+	/* Without a second parameter it rounds up a number */
+	select round(387.965);
+	/* But if we provide a second parameter, like how many decimal places we want the number to round */
+	select round(387.965, 2);
+	/* If we put a negative second  parameter, it then decides the power of 10 we want our number to round up to */
+	select round(387.965, -2);
+	/* The truncate is the exact opposite of round, it takes two parameters */
+	select truncate(387.965, -2);
+	/* There are few more functions */
+	select floor(387.965);
+	select ceil(387.965); /* or */ select ceiling(387.965);
