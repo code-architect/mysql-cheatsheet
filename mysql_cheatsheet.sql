@@ -172,3 +172,13 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		WHEN 'B' THEN 'SECOND' 
 	ELSE 'Nothing'
 	END;
+	
+/* Null related functions */
+	/* ISNULL Function will return boolean value 1 or 0  */
+	select isnull(null); /* or */ select isnull(41);
+	/* IS Function check and return boolean value 1 or 0  */
+	select 5 is null; /* or */ select NULL is NULL;
+	/* IFNULL redirect being null from being something else */
+	select ifnull(null, 'Ok Its null'); /* this will return 'Ok Its null' */
+	select ifnull(5, 'Ok Its null'); /* this will return the value it self i.e. 5 */
+	
