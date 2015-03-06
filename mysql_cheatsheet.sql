@@ -132,3 +132,30 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	/* if we put a negative 1 i.e. (-1) the answer will be 'gmail.com' */
 	select substring_index('batman@gmail.com', '@', -1);
 	select substring_index('domain.subdomain.com', '.', -2); /* answer is  'subdomain.com' */
+	
+/* Temporal Function */	
+	/* Adding 5days to a given date */
+	SELECT  '2014-08-25' + INTERVAL 5 DAY;
+	/* To add 5 years and 3 months */
+	SELECT  '2014-08-25' + INTERVAL 5 YEAR + INTERVAL 3 MONTH;
+	/* or, In both cases the answer will be same */
+	SELECT  '2014-08-25' + INTERVAL '5-3' YEAR_MONTH;
+	/* Showing the date format */
+	SELECT date_format('2014-08-28', '%W, %M %D, %Y');
+	/* or */
+	select date_format(curdate(), '%W, %M %D, %Y');
+	/* select specific part from a date */
+	/* Select day from a date */
+	select day('2014-08-29');
+	/* Select month from a date */
+	select month('2014-08-29');
+	/* or */
+	select extract(month from '2014-08-29');
+	/* Select year from a date */
+	select year('2014-08-29');
+	/* Select day name from a date */
+	select dayname('2014-08-29');	
+	/* converting a string to date */
+	select STR_TO_DATE('December 25th, 2014', '%M %D, %Y');
+	/* To find amount of time there is between two dates */
+	select DATEDIFF('2014-08-29','1988-06-03');
