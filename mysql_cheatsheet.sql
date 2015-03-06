@@ -159,3 +159,16 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	select STR_TO_DATE('December 25th, 2014', '%M %D, %Y');
 	/* To find amount of time there is between two dates */
 	select DATEDIFF('2014-08-29','1988-06-03');
+	
+/* Control flow functions */
+	/* IF in mysql */
+	select if(15>12, 'larger', 'smaller');
+	/* ELT function */
+	select elt(2, 25, 13*85, '2020-12-20' + INTERVAL 5 DAY);
+	/* CASE Function */
+	/* CASE with a reference value */
+	select CASE 'A' 
+		WHEN 'A' THEN 'first' 
+		WHEN 'B' THEN 'SECOND' 
+	ELSE 'Nothing'
+	END;
