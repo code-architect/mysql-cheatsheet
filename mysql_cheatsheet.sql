@@ -104,3 +104,31 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	/* There are few more functions */
 	select floor(387.965);
 	select ceil(387.965); /* or */ select ceiling(387.965);
+	
+/* Character string function */
+	/* Concat function to concat a string */
+	select concat('Hello', ' World', ' I am a function');
+	/* The concat_ws uses the first value to glue the rest of the string in concat_ws 
+	The ws stands for separator */
+	select concat_ws(' ', 'A', 'B', 'C');
+	/* Extracting characters from a string */
+	/* This will extract 'my' from 'mysql' */
+	select left('mysql', 2);
+	/* This will extract 'sql' from 'mysql' */
+	select right('mysql', 3);
+	/* The mid() function has two form first one:
+	the second argument denote the number of the char where we begin extraction 
+	the answer of this will be 'ysql' */
+	select mid('mysql', 2);
+	/* The third argument denotes upto where we want to get the string 
+	the answer of this will be 'ysq' */
+	select mid('mysql', 2, 3);
+	/* there is another function substring() and substr() both are synonyms with mid() fuunction  */
+	
+	/* The substring_index() function is extremely useful, we can understand up-to second parameter, 
+	the third parameter indicate to get the first '@' we found, if we put 2 it will search for a second '@' */
+	/* the answer of this is 'batman' */
+	select substring_index('batman@gmail.com', '@', 1);
+	/* if we put a negative 1 i.e. (-1) the answer will be 'gmail.com' */
+	select substring_index('batman@gmail.com', '@', -1);
+	select substring_index('domain.subdomain.com', '.', -2); /* answer is  'subdomain.com' */
