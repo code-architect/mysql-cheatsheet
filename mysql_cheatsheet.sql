@@ -300,3 +300,39 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	| PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ORACLE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS,NO_AUTO_CREATE_USER |
 	+----------------------------------------------------------------------------------------------------------------------+
 	1 row in set (0.00 sec);
+	
+	/* Show warnings */
+	SHOW WARNINGS\G;
+	
+	/* MySQL Error Code
+		Server errors have values less then 2000 
+		Server error- < 2000
+		Example:-
+		Error 1048 : cannot be null.
+		Error 1264 : out of range value.
+		Error 1406 : data too long
+		Error 1292 : incorrect date value
+				
+		
+		Client side errors have values greater then 2000 
+		Client Error- >=2000 to 2999
+		
+		SQL state code (string - general, but ANSI)
+		
+		Error message text(have two parts, one is fixed another is variable)
+		
+		Eliminating Note warnings
+		SET @@sql_notes = 0;
+		
+		******System error*****
+		The first two characters of an SQLSTATE value indicate the error class:
+
+		Class = '00' indicates success.
+		Class = '01' indicates a warning.
+		Class = '02' indicates “not found.” 
+		
+		to see any system error from mysql command line, type"system" at the beginning.	*/
+		
+		mysql> system prerror (error number);
+		/* short-cut for this command */
+		mysql> \! prerror (error number);
