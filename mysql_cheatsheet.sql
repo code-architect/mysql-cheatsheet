@@ -267,3 +267,36 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 	/* -------------------------------------------------------------------------------------------------------------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------------------------------------- */
 	/* -------------------------------------------------------------------------------------------------------------------------------------- */
+
+	/* It is better to change sql warnings into sql errors
+	Warning tells us something bad happened, but the system allowed it anyway.
+	Error tells us something bad would have happened, but the system prevented it.
+	
+	Warning is the mysql default, sql_mode variable lets  us override default.
+	
+	/* Setting SQL_MODE */
+	/* This will blank all sql mode by default the mode is "TRADITIONAL" */
+	SET sql_mode = '';
+	SET sql_mode = PIPES_AS_CONCAT
+	SET sql_mode = TRADITIONAL
+	/* Don't select this one , it's sucks, not a good idea */
+	SET sql_mode = ANSI_QUOTES;
+	
+	mysql> SELECT @@sql_mode;
+	+------------+
+	| @@sql_mode |
+	+------------+
+	|            |
+	+------------+
+	1 row in set (0.00 sec)
+
+	mysql> set sql_mode=ORACLE;
+	Query OK, 0 rows affected (0.00 sec)
+
+	mysql> SELECT @@sql_mode;
+	+----------------------------------------------------------------------------------------------------------------------+
+	| @@sql_mode                                                                                                           |
+	+----------------------------------------------------------------------------------------------------------------------+
+	| PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,ORACLE,NO_KEY_OPTIONS,NO_TABLE_OPTIONS,NO_FIELD_OPTIONS,NO_AUTO_CREATE_USER |
+	+----------------------------------------------------------------------------------------------------------------------+
+	1 row in set (0.00 sec);
