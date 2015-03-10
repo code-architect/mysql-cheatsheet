@@ -335,4 +335,34 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		
 		mysql> system prerror (error number);
 		/* short-cut for this command */
-		mysql> \! prerror (error number);
+		mysql> \! prerror (error number);		
+		
+	/* AUTO_INCREMENT issues */
+		/* We can change the next auto_increment number like this */
+		alter table test_1 auto_increment = 6;
+		/* But if we enter the the row, after that we cannot change the auto_increment back to same position 
+		   we have to delete the row or rows which are blocking our desired number to make the alter table command work,
+		   or completely delete the row structure and re build it */
+		   
+		/* To get the last inserted id , if we enter multiple rows at a same time, it provides us 
+		   The first batch id of those inserts */   
+		select last_insert_id();
+		/* we can store this bit of information in to a variable */
+		SET @lastId = last_insert_id();
+	
+	/* DELETE */
+		/* To delete all data from a table */
+		DELETE FROM tableName; /* And this will delete all the data from your defined table */
+		
+		/* We can target specific row in a table by using where clause */
+		DELETE FROM tableName WHERE id = 1011;
+		
+		/* We can also target multiple number of rows */
+		DELETE FROM tableName WHERE countryCode = "IR";
+		
+		/* Delete rows using limit clause */
+		DELETE * FROM tableName LIMIT 10;
+		DELETE * FROM tableName WHERE id <= 1000 LIMIT 100;
+		
+		/* Delete rows using order by clause */
+		DELETE from tableName WHERE countryCode = 'NDL' ORDER BY population LIMIT 10;
