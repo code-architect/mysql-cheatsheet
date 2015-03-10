@@ -366,3 +366,13 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		
 		/* Delete rows using order by clause */
 		DELETE from tableName WHERE countryCode = 'NDL' ORDER BY population LIMIT 10;
+		
+	/* UPDATE */
+		/* If we update without specification or restriction all rows will be updated by default */
+		UPDATE tableName SET bdate = bdate + INTERVAL 256 DAY;
+		
+		UPDATE tableName SET bdate = bdate + INTERVAL 1 YEAR WHERE name LIKE 'R%'; /* Restricting update by where clause */
+		
+		UPDATE tableName SET bdate = bdate + INTERVAL 1 YEAR LIMIT 10; /* Restricting update by where clause */
+		
+		UPDATE tableName SET age = IF(age > 36, age - 1, age) LIMIT 5; /* logical operation during update  */
