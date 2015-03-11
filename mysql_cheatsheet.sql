@@ -411,4 +411,41 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		 /* this mode prevents an update or delete without a where clause, 
 		 and the where clause has to reference an indexed column
 		 */
-	
+	/* Importing Data */
+		/* Load data from anywhere, tab formatted */
+		load data infile '<path>' into table tablename;
+		
+		/* Import Non-Tab Format data(comma separated) */
+		load data infile '<path>' into table test 
+		fields terminated by ',' 
+		enclosed by'"' 
+		lines terminated by '\r';
+		
+		/* We can change the escape character, rather than using the backslash character */
+		load data infile '<path>' into table test 
+		fields terminated by ',' 
+		optionally enclosed by'"' 
+		escaped by '@'
+		lines terminated by '\r';
+		
+		/* Skipping header lines on import */
+		load data infile '<path>' into table test ignore 1 lines;
+		
+		/* Changing Import column order i.e. if the data order is not right*/
+		load data infile '<path>' into table test (name, district, id, etc.);
+		
+		/* If we want to skip some data while inserting 
+		   If we do not use this @SKIP variable it's just going to be their
+		   we don't even need to use it
+		*/
+		load data infile '<path>' into table test (@SKIP, CODE, NAME, etc..);
+		
+		/* Converting data while importing */
+		/* In this case date and name */	
+		LOAD DATA INFILE '<path>' INTO TABLE test
+		FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+		LINES TERMINATED BY '\r'
+		IGNORE 2 LINES
+		(@SKIP, @FNM, @LNM, @JDT, email, adde, etc)
+		SET name = CONCAT(@LNM, ', ', @FNM),
+		JoinDate = STR_TO_DATE(@JDT, '%b %e %y');
