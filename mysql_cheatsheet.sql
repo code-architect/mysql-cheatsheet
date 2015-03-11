@@ -376,3 +376,39 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		UPDATE tableName SET bdate = bdate + INTERVAL 1 YEAR LIMIT 10; /* Restricting update by where clause */
 		
 		UPDATE tableName SET age = IF(age > 36, age - 1, age) LIMIT 5; /* logical operation during update  */
+		
+	/* OTHER DML Commands */
+		/* 
+		When a replace command actually replace something there two things happen, the first action
+		is to delete the existing row, and the second action is to insert the new row
+		*/
+		REPLACE INTO tableName (code, name, population) VALUES ('AUS', 'Land of fine cuisine', 20000000);
+		
+		/* Extended INSERT syntax */
+		insert into test_2 (id, name, age) 
+		values (6, 'rajoooi', 45) 
+		on duplicate key update 
+		id = values(id), name = values(name), age = values(age);
+		
+		/* TRUNCATE */
+		show create table test_2; /* Just showing table */
+		truncate table test_2; /* The table data has been deleted but the STRUCTURE of the table remains */
+		
+		/* To create a table from another table */
+		create table test_2 AS (select * from test_1);
+		
+		/* to insert data from another table */
+		insert into test_2 select * from test_1;
+		
+		/* Safe update mode for mysql */
+		--safe-updates 
+		/* or */
+		--i-am-a-dummy
+		/* or we can switch this mode on or off by using a system variable 
+		by default it is switched off, and the default value of @@sql_safe_updates is 0
+		but we can switch it on by simply changing the value to */
+		select @@sql_safe_updates = 1;
+		 /* this mode prevents an update or delete without a where clause, 
+		 and the where clause has to reference an indexed column
+		 */
+	
