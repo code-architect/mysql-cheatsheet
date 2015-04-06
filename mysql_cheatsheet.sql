@@ -449,3 +449,51 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		(@SKIP, @FNM, @LNM, @JDT, email, adde, etc)
 		SET name = CONCAT(@LNM, ', ', @FNM),
 		JoinDate = STR_TO_DATE(@JDT, '%b %e %y');
+		
+	/* Deriving New Tables */
+		/* New table from existing table */
+		create table <tablename> like <tablename>;
+		
+		/* Including features 
+		 * We can set engine name(by default InnoDB), primary key and everything we want this way
+		*/
+		create table BoltContries (PRIMARY KEY (code))  ENGINE=MyISAM 
+		select code, name, population, gnp from	country
+		where region = 'boltContries';
+		
+		/* Adding a new column while creating a new table from another table */
+		create table Continents (
+			id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT
+		) select CAST(Continent AS CHAR) AS Name,
+			SUM(Population) AS Population,
+			SUM(SurfaceArea) AS SurfaceArea,
+			SUM(GNP) AS GNP from
+			Country
+		GROUP BY Continent;
+		
+		/* Copying from another table */
+		INSERT INTO test_2 select * from test_1;
+		
+		/* Temporary Table */
+		/* Warnings:
+			1) Table belongs to current connection
+			2) Automatically dropped when logged off
+			3) Only for private use
+			4) Avoid using memory engine for routine temporary tables (server could run out of ram)
+			5) They have separate name space
+			6) While dropping a temporary table mention DROP TEMPORARY TABLE
+		*/
+		CREATE TEMPORARY TABLE test_temp
+		
+		/* Altering Derived Tables */
+		/* Made a mistake, now altering it it */ 
+		create table test_2 (
+			primary key (code)
+		) select code, name, population * 1.1 from
+			test_1
+		where region = 'ASK';
+		
+		/* alter */
+		alter table test_2 
+		change `population * 1.1` poputaion int unsigned not null,
+		add index (population);
