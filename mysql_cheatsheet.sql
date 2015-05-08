@@ -497,3 +497,37 @@ select  benchmark(100000, @test > 0 and @test < 1000);
 		alter table test_2 
 		change `population * 1.1` poputaion int unsigned not null,
 		add index (population);
+		
+	/* Multi-Table Queries */
+		/* There are Two techniques: Sub-query and Join */
+	/* Sub Query */
+		/* Scalar Subquery (one row, one column) */
+		select * from offices where city = (select city from offices where country = 'France');
+		/* A little complex code */
+		select name,
+		(select count(*) from city where countryCode = code) 
+		cityCount from country where continent = 'America'
+		order by CityCount DESC;
+		
+		/* Table sub query */
+		select avg(Money) from (select customerNumber as CustomerID, (amount) as Money from payments) as sudotable;
+		/* warning: If you do not provide an alias to the derived table there will be error such as
+		Error Code: 1248. Every derived table must have its own alias.
+		we can see it's a Server error
+		*/
+		
+		/* Columnar Subquery */
+		/* We use these in side of an "IN" operation or any it's cousins "any", "all" etc */
+		select customerName, city from customers 
+		where country = "USA" and salesRepEmployeeNumber IN (
+		select employeeNumber 
+		from employees 
+		where employeeNumber 
+		between 1165 AND 1286 );		
+		
+		/* Another example with tuple compression */
+		select Continent from country where code IN (
+		select countryCode from countryLanguage
+		where (language, isOfficial) = ('spanish', 'TRUE'))
+		group by Continent;
+		
